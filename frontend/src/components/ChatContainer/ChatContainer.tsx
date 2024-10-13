@@ -3,13 +3,13 @@ import styles from './ChatContainer.module.css';
 import MessagesContainer from '../MessagesContainer/MessagesContainer';
 import InputContainer from '../InputContainer/InputContainer';
 
-function ChatContainer() {
+const ChatContainer = () => {
   return (
     <div className={styles.chatContainer}>
       <MessagesContainer />
       <InputContainer />
     </div>
   );
-}
+};
 
 export default ChatContainer;

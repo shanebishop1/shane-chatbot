@@ -1,7 +1,7 @@
 import styles from './MessagesContainer.module.css';
 
-function MessagesContainer() {
+const MessagesContainer = () => {
   return <div className={styles.messagesContainer}>Messages</div>;
-}
+};
 
 export default MessagesContainer;
