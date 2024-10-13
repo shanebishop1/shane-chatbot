@@ -1,0 +1,20 @@
+.chatContainer {
+  background-color: #ffffff;
+  color: black;
+  display: flex;
+  flex-direction: column;
+
+  /* For narrower screens */
+  height: 100%;
+  width: 100%;
+  padding: 0px;
+
+  /* For wider screens */
+  @media (min-width: 550px) {
+    height: 750px;
+    width: 500px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+  }
+}
