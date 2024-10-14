@@ -1,6 +1,5 @@
 import os
 from pprint import pprint
-from openai import OpenAI
 import time
 import random
 from fastapi import FastAPI
