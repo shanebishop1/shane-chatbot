@@ -1,7 +1,6 @@
 .messagesContainer {
+  flex-basis: 80%;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  flex-basis: 80%;
-  background-color: lightblue;
 }
