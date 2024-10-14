@@ -6,6 +6,7 @@ import { LuSendHorizonal } from 'react-icons/lu';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
 import { MessageContext } from '../../context/messageContext';
 import { Message, MessageContextType } from '../../types/types';
+import { fetchLLMResponse } from '../../api/chat';
 import { isIOSDevice } from '../../utils/utils';
 
 const InputContainer = () => {
@@ -37,6 +38,9 @@ const InputContainer = () => {
     // Clear the input field
     setUserCurrentText('');
 
+    // Add the LLM response to the chat
+    const out = await fetchLLMResponse();
+    pushMessage(out);
   };
 
   return (
