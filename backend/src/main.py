@@ -30,18 +30,29 @@ def get_chat_thread():
 
 
 @app.post("/chat", response_model=Message)
-def send_message(newMessage: Message):
+async def send_message(newMessage: Message, db: Session = Depends(get_db)):
+    db.add(convert_message_to_db_message(newMessage))
+    db.commit()
+
     llm_response = get_llm_response(
         f"Context is {newMessage.context}:\n {newMessage.text}"
     )
 
     # Get time in milliseconds to match how it's handled in the frontend
     timestamp = int(time.time() * 1000)
-    llm_response_message = llm_response.content
-    return {
-        "id": timestamp - round(random.random() * 10),
-        "sender": "chatgpt",
-        "text": llm_response_message,
-        "context": newMessage.context,
-        "timestamp": timestamp,
-    }
+    llm_response_text = llm_response.content
+
+    if not llm_response_text:
+        raise ValueError("llm_response_text must not be null")
+
+    llm_response_message = Message(
+        id=round(timestamp / 1000) - round(random.random() * 10),
+        sender="chatgpt",
+        text=llm_response_text,
+        context=newMessage.context,
+        timestamp=timestamp,
+    )
+
+    db.add(convert_message_to_db_message(llm_response_message))
+    db.commit()
+    return llm_response_message
