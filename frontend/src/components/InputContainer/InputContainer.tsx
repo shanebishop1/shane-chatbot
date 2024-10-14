@@ -6,6 +6,7 @@ import { LuSendHorizonal } from 'react-icons/lu';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
 import { MessageContext } from '../../context/messageContext';
 import { Message, MessageContextType } from '../../types/types';
+import { isIOSDevice } from '../../utils/utils';
 
 const InputContainer = () => {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -18,6 +19,10 @@ const InputContainer = () => {
   const { pushMessage } = messageContext;
 
   const onSubmit = async () => {
+    // Make the iOS keyboard disappear
+    if (textAreaRef.current && isIOSDevice()) {
+      textAreaRef.current.blur();
+    }
     // Add the user message to the chat
     const timestamp = new Date().getTime();
     const userMessage = {

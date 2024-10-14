@@ -21,12 +21,15 @@
   }
 }
 
+.scrollBarFix {
+  overflow-y: auto;
   margin-right: -25px;
+  padding-right: 28px;
 }
 
 /* Customize the scrollbar */
 ::-webkit-scrollbar {
-  width: 12px; /* Width of the entire scrollbar */
+  width: 8px; /* Width of the entire scrollbar */
 }
 
 ::-webkit-scrollbar-thumb {
