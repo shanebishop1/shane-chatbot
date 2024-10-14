@@ -1,4 +1,5 @@
 .chatMessage {
   padding: 14px;
   max-width: 70%;
+  word-break: break-word;
 }
