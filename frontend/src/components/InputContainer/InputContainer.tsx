@@ -1,17 +1,14 @@
 import styles from './InputContainer.module.css';
-import reactLogo from '../../assets/react.svg';
+import userProfile from '../../assets/userProfile.png';
 import { HiOutlineCog } from 'react-icons/hi';
 import { LuSendHorizonal } from 'react-icons/lu';
+import ProfilePicture from '../ProfilePicture/ProfilePicture';
 
 const InputContainer = () => {
   return (
     <div className={styles.inputVerticalContainer}>
       <div className={styles.inputProfileTextContainer}>
-        <div className={styles.userProfileImgContainer}>
-          <div>
-            <img src={reactLogo} className="logo react" alt="React logo" />
-          </div>
-        </div>
+        <ProfilePicture src={userProfile} imageType="User" />
         <div className={styles.inputTextBoxContainer}>
           <form>
             <textarea placeholder="Your question" />
