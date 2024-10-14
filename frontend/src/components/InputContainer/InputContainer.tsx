@@ -8,6 +8,7 @@ import { MessageContext } from '../../context/messageContext';
 import { Message, MessageContextType } from '../../types/types';
 import { fetchLLMResponse } from '../../api/chat';
 import { isIOSDevice } from '../../utils/utils';
+import PrefsModal from '../PrefsModal/PrefsModal';
 
 const InputContainer = () => {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -82,7 +83,7 @@ const InputContainer = () => {
         <div
           className={`${styles.inputOptionsCol} ${styles.inputOptionsColRight}`}
         >
-          <button type="button">
+          <button type="button" onClick={() => setShowPrefs(!showPrefs)}>
             <HiOutlineCog className={styles.gearIcon} />
           </button>
           <button type="submit" onClick={onSubmit}>
@@ -90,6 +91,7 @@ const InputContainer = () => {
           </button>
         </div>
       </div>
+      {showPrefs && <PrefsModal setShowPrefs={setShowPrefs} />}
     </div>
   );
 };
