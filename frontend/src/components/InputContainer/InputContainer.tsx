@@ -1,17 +1,57 @@
+import React, { useContext, useRef, useState } from 'react';
 import styles from './InputContainer.module.css';
 import userProfile from '../../assets/userProfile.png';
 import { HiOutlineCog } from 'react-icons/hi';
 import { LuSendHorizonal } from 'react-icons/lu';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
+import { MessageContext } from '../../context/messageContext';
+import { Message, MessageContextType } from '../../types/types';
 
 const InputContainer = () => {
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [showPrefs, setShowPrefs] = useState<boolean>(false);
+  const [userCurrentText, setUserCurrentText] = useState<string>('');
+  const [userCurrentContext, setUserCurrentContext] =
+    useState<string>('onboarding');
+  const messageContext = useContext(MessageContext) as MessageContextType;
+  const { messages } = messageContext;
+  const { pushMessage } = messageContext;
+
+  const onSubmit = async () => {
+    // Add the user message to the chat
+    const timestamp = new Date().getTime();
+    const userMessage = {
+      id: timestamp - Math.random(),
+      sender: 'user',
+      text: userCurrentText,
+      context: userCurrentContext,
+      timestamp,
+    } as Message;
+    pushMessage(userMessage);
+
+    // Clear the input field
+    setUserCurrentText('');
+
+  };
+
   return (
     <div className={styles.inputVerticalContainer}>
       <div className={styles.inputProfileTextContainer}>
         <ProfilePicture src={userProfile} imageType="User" />
         <div className={styles.inputTextBoxContainer}>
-          <form>
-            <textarea placeholder="Your question" />
+          <form onSubmit={onSubmit}>
+            <textarea
+              ref={textAreaRef}
+              placeholder="Your question"
+              value={userCurrentText}
+              onChange={(e) => setUserCurrentText(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault(); // prevent the default action (new line)
+                  onSubmit();
+                }
+              }}
+            />
           </form>
         </div>
       </div>
@@ -20,9 +60,14 @@ const InputContainer = () => {
           className={`${styles.inputOptionsCol} ${styles.inputOptionsColLeft}`}
         >
           <div>Context</div>
-          <select className={styles.contextSelect}>
+          <select
+            value={userCurrentContext}
+            className={styles.contextSelect}
+            onChange={(e) => setUserCurrentContext(e.target.value)}
+          >
             <option value="onboarding">Onboarding</option>
-            <option value="other">Other</option>
+            <option value="my_account">My Account</option>
+            <option value="strategy">Strategy</option>
           </select>
         </div>
         <div
@@ -31,7 +76,7 @@ const InputContainer = () => {
           <button type="button">
             <HiOutlineCog className={styles.gearIcon} />
           </button>
-          <button type="submit">
+          <button type="submit" onClick={onSubmit}>
             <LuSendHorizonal className={styles.sendIcon} />
           </button>
         </div>
