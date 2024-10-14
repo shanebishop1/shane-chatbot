@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styles from './InputContainer.module.css';
 import userProfile from '../../assets/userProfile.png';
 import { HiOutlineCog } from 'react-icons/hi';
@@ -9,6 +9,7 @@ import { Message, MessageContextType } from '../../types/types';
 import { postChat } from '../../api/chat';
 import { isIOSDevice } from '../../utils/utils';
 import PrefsModal from '../PrefsModal/PrefsModal';
+import { getChatThreadByContext } from '../../api/chat';
 
 const InputContainer = () => {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -19,6 +20,15 @@ const InputContainer = () => {
   const messageContext = useContext(MessageContext) as MessageContextType;
   const { messages } = messageContext;
   const { pushMessage } = messageContext;
+
+  useEffect(() => {
+    const updateChatThread = async () => {
+      const chatThread: Message[] =
+        await getChatThreadByContext(userCurrentContext);
+      messageContext.setMessages(chatThread);
+    };
+    updateChatThread();
+  }, [userCurrentContext]);
 
   const onSubmit = async () => {
     // Make the iOS keyboard disappear

@@ -4,7 +4,6 @@ import paths from './paths.json';
 const env = import.meta.env;
 
 export const postChat = async (message: Message): Promise<Message> => {
-  console.log('message', JSON.stringify(message));
   return fetch(`${env.VITE_BACKEND_URL}${paths.POST_CHAT}`, {
     method: 'POST',
     headers: {
@@ -14,12 +13,32 @@ export const postChat = async (message: Message): Promise<Message> => {
   })
     .then((response: Response) => {
       if (!response.ok) {
-        throw new Error('Error fetching');
+        throw new Error(`Error submitting message: ${message}`);
       }
       return response.json();
     })
     .then((data) => {
       return data as Message;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+export const getChatThreadByContext = async (
+  context: string,
+): Promise<Message[]> => {
+  return fetch(
+    `${env.VITE_BACKEND_URL}${paths.GET_CHAT_THREAD.replace(':context', context)}`,
+  )
+    .then((response: Response) => {
+      if (!response.ok) {
+        throw new Error(`Error fetching chat thread: ${context}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      return data as Message[];
     })
     .catch((error) => {
       throw error;
