@@ -1,13 +1,18 @@
 import os
 from pprint import pprint
 import time
+from datetime import datetime
 import random
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, HTTPException
+from sqlalchemy.orm import Session
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from .llm.llm import get_llm_response
-from .types.types import Message
+from src.database.database import get_db
+from src.database.models import DBMessage
+from src.llm.llm import get_llm_response
+from src.types.types import Message
+from src.utils.utils import convert_message_to_db_message
 
 load_dotenv()
 frontend_url = os.getenv("FRONTEND_URL")
@@ -24,8 +29,17 @@ if frontend_url:
     )
 
 
-@app.get("/chat/{context_id}", response_model=List[Message])
-def get_chat_thread():
+@app.get("/chat/{context}")
+async def get_chat_thread(context: str, db: Session = Depends(get_db)):
+    messages = (
+        db.query(DBMessage)
+        .filter(DBMessage.context == context)
+        .order_by(DBMessage.timestamp)
+        .all()
+    )
+
+    if not messages:
+        return []
     return messages
 
 
