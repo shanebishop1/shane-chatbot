@@ -2,11 +2,25 @@
   flex-basis: 80%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
   margin-bottom: 5px;
-  overflow-y: auto;
   /* Positions the scroll bar outside of the message container */
   padding-right: 20px;
+  margin-right: -17px;
+  overflow-y: auto;
+  /* If a larger device, hide scrollbar unless hovering */
+  @media (min-width: 550px) and (min-height: 680px) {
+    overflow-y: hidden;
+  }
+}
+
+.messagesContainer:hover {
+  @media (min-width: 550px) and (min-height: 680px) {
+    overflow-y: auto;
+    margin-right: -25px;
+  }
+}
+
   margin-right: -25px;
 }
 
