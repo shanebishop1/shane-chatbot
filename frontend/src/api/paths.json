@@ -1,0 +1,4 @@
+{
+  "CHAT_THREAD": "/chat/:context",
+  "POST_CHAT": "/chat"
+}

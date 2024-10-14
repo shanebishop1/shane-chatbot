@@ -6,7 +6,7 @@ import { LuSendHorizonal } from 'react-icons/lu';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
 import { MessageContext } from '../../context/messageContext';
 import { Message, MessageContextType } from '../../types/types';
-import { fetchLLMResponse } from '../../api/chat';
+import { postChat } from '../../api/chat';
 import { isIOSDevice } from '../../utils/utils';
 import PrefsModal from '../PrefsModal/PrefsModal';
 
@@ -28,7 +28,7 @@ const InputContainer = () => {
     // Add the user message to the chat
     const timestamp = new Date().getTime();
     const userMessage = {
-      id: timestamp - Math.random(),
+      id: timestamp - Math.round(Math.random() * 10),
       sender: 'user',
       text: userCurrentText,
       context: userCurrentContext,
@@ -39,9 +39,13 @@ const InputContainer = () => {
     // Clear the input field
     setUserCurrentText('');
 
-    // Add the LLM response to the chat
-    const out = await fetchLLMResponse();
-    pushMessage(out);
+    try {
+      // Add the LLM response to the chat
+      const out = await postChat(userMessage);
+      pushMessage(out);
+    } catch (error) {
+      console.error('Error getting LLM response', error);
+    }
   };
 
   return (
