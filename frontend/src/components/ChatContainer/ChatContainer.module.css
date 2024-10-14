@@ -5,13 +5,14 @@
   flex-direction: column;
   padding: 30px;
   box-sizing: border-box;
+  overflow: hidden;
 
   /* For narrower screens */
   height: 100%;
   width: 100%;
 
   /* For wider screens */
-  @media (min-width: 550px) {
+  @media (min-width: 550px) and (min-height: 550px) {
     height: 90%;
     width: 33%;
     min-width: 500px;

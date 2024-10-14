@@ -1,0 +1,10 @@
+.llmMessageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.llmMessage {
+  background-color: #f4f4f4;
+  color: black;
+  border-radius: 20px;
+}
