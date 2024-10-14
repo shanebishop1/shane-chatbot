@@ -8,6 +8,9 @@ fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 gunicorn = "*"
 openai = "*"
+psycopg2 = "*"
+alembic = "*"
+sqlalchemy = "*"
 
 [dev-packages]
 black = "*"
