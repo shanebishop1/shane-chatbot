@@ -105,7 +105,12 @@ const InputContainer = () => {
           </button>
         </div>
       </div>
-      {showPrefs && <PrefsModal setShowPrefs={setShowPrefs} />}
+      {showPrefs && (
+        <PrefsModal
+          userCurrentContext={userCurrentContext}
+          setShowPrefs={setShowPrefs}
+        />
+      )}
     </div>
   );
 };

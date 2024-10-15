@@ -1,4 +1,4 @@
 {
-  "GET_CHAT_THREAD": "/chat/:context",
-  "POST_CHAT": "/chat"
+  "CHAT_THREAD": "/chat/:context",
+  "CHAT": "/chat"
 }

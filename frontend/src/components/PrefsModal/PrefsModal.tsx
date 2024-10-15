@@ -3,12 +3,17 @@ import React, { useContext } from 'react';
 import styles from './PrefsModal.module.css';
 import { MessageContext } from '../../context/messageContext';
 import { MessageContextType } from '../../types/types';
+import { deleteChatThreadByContext } from '../../api/chat';
 
 interface PrefsModalProps {
     setShowPrefs: React.Dispatch<React.SetStateAction<boolean>>;
+    userCurrentContext: string;
 }
 
-const PrefsModal: React.FC<PrefsModalProps> = ({ setShowPrefs }) => {
+const PrefsModal: React.FC<PrefsModalProps> = ({
+    setShowPrefs,
+    userCurrentContext,
+}) => {
     const messageContext = useContext(MessageContext) as MessageContextType;
     return (
         <div className={styles.prefsModal}>
@@ -18,6 +23,7 @@ const PrefsModal: React.FC<PrefsModalProps> = ({ setShowPrefs }) => {
                     className={styles.prefButton}
                     onClick={() => {
                         messageContext.clearMessages();
+                        deleteChatThreadByContext(userCurrentContext);
                         setShowPrefs(false);
                     }}
                 >

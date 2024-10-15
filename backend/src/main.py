@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from src.database.database import get_db
+from src.database.database import get_db, query_chat_thread_by_context
 from src.database.models import DBMessage
 from src.llm.llm import get_llm_response
 from src.types.types import Message
@@ -21,23 +21,24 @@ if frontend_url:
         CORSMiddleware,
         allow_origins=[frontend_url],
         allow_credentials=True,
-        allow_methods=["GET", "POST"],
+        allow_methods=["GET", "POST", "DELETE"],
         allow_headers=["*"],
     )
 
 
 @app.get("/chat/{context}", response_model=List[Message])
 async def get_chat_thread(context: str, db: Session = Depends(get_db)):
-    messages = (
-        db.query(DBMessage)
-        .filter(DBMessage.context == context)
-        .order_by(DBMessage.timestamp)
-        .all()
-    )
-
+    messages = query_chat_thread_by_context(context, db)
     if not messages:
         return []
     return messages
+
+
+@app.delete("/chat/{context}", response_model=dict[str, str])
+async def clear_chat_thread(context: str, db: Session = Depends(get_db)):
+    db.query(DBMessage).filter(DBMessage.context == context).delete()
+    db.commit()
+    return {"message": f"{context} chat cleared"}
 
 
 @app.post("/chat", response_model=Message)
