@@ -46,9 +46,7 @@ async def send_message(newMessage: Message, db: Session = Depends(get_db)):
     db.add(convert_message_to_db_message(newMessage))
     db.commit()
 
-    llm_response = get_llm_response(
-        f"Context is {newMessage.context}:\n {newMessage.text}"
-    )
+    llm_response = get_llm_response(newMessage.text, newMessage.context, db)
 
     llm_response_text = llm_response.content
 
