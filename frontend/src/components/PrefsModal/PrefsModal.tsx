@@ -1,5 +1,5 @@
 import { FaRegTrashCan } from 'react-icons/fa6';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styles from './PrefsModal.module.css';
 import { MessageContext } from '../../context/messageContext';
 import { MessageContextType } from '../../types/types';
@@ -15,8 +15,27 @@ const PrefsModal: React.FC<PrefsModalProps> = ({
     userCurrentContext,
 }) => {
     const messageContext = useContext(MessageContext) as MessageContextType;
+
+    const modalRef = React.useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        // If the user clicks outside of the modal, close it.
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                modalRef.current &&
+                !modalRef.current.contains(event.target as Node)
+            ) {
+                setShowPrefs(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     return (
-        <div className={styles.prefsModal}>
+        <div className={styles.prefsModal} ref={modalRef}>
             <div className={styles.prefContainer}>
                 <button
                     type="button"
