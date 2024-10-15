@@ -38,7 +38,7 @@ const InputContainer = () => {
     // Add the user message to the chat
     const timestamp = new Date().getTime();
     const userMessage = {
-      id: Math.round(timestamp / 1000) - Math.round(Math.random() * 10),
+      id: Math.round(Math.random() * 10000),
       sender: 'user',
       text: userCurrentText,
       context: userCurrentContext,

@@ -1,9 +1,6 @@
 import os
-from pprint import pprint
 import time
-from datetime import datetime
-import random
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
@@ -29,7 +26,7 @@ if frontend_url:
     )
 
 
-@app.get("/chat/{context}")
+@app.get("/chat/{context}", response_model=List[Message])
 async def get_chat_thread(context: str, db: Session = Depends(get_db)):
     messages = (
         db.query(DBMessage)
@@ -60,13 +57,17 @@ async def send_message(newMessage: Message, db: Session = Depends(get_db)):
         raise ValueError("llm_response_text must not be null")
 
     llm_response_message = Message(
-        id=round(timestamp / 1000) - round(random.random() * 10),
+        id=0,
         sender="chatgpt",
         text=llm_response_text,
         context=newMessage.context,
         timestamp=timestamp,
     )
 
-    db.add(convert_message_to_db_message(llm_response_message))
+    llm_db_message = convert_message_to_db_message(llm_response_message)
+    db.add(llm_db_message)
+    db.flush()
+    new_id = llm_db_message.id
     db.commit()
+    llm_response_message.id = int(new_id)  # type: ignore
     return llm_response_message
