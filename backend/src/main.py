@@ -1,5 +1,5 @@
 import os
-import time
+from datetime import datetime
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from typing import List
@@ -49,8 +49,6 @@ async def send_message(newMessage: Message, db: Session = Depends(get_db)):
         f"Context is {newMessage.context}:\n {newMessage.text}"
     )
 
-    # Get time in milliseconds to match how it's handled in the frontend
-    timestamp = int(time.time() * 1000)
     llm_response_text = llm_response.content
 
     if not llm_response_text:
@@ -61,7 +59,7 @@ async def send_message(newMessage: Message, db: Session = Depends(get_db)):
         sender="chatgpt",
         text=llm_response_text,
         context=newMessage.context,
-        timestamp=timestamp,
+        timestamp=datetime.now(),
     )
 
     llm_db_message = convert_message_to_db_message(llm_response_message)

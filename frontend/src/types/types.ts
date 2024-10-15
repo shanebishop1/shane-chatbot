@@ -3,7 +3,7 @@ export type Message = {
     sender: string;
     text: string;
     context: string;
-    timestamp: number;
+    timestamp: string;
 };
 
 export type MessageContextType = {

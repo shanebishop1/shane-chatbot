@@ -8,5 +8,5 @@ def convert_message_to_db_message(message: Message) -> DBMessage:
         sender=message.sender,
         text=message.text,
         context=message.context,
-        timestamp=datetime.fromtimestamp(message.timestamp / 1000),
+        timestamp=message.timestamp,
     )

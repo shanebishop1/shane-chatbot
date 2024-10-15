@@ -8,4 +8,4 @@ class Message(BaseModel):
     sender: str
     text: str
     context: str
-    timestamp: int
+    timestamp: datetime
