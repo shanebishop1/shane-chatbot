@@ -17,6 +17,6 @@
     width: 33%;
     min-width: 550px;
     border-radius: 15px;
-    box-shadow: 0 0 10px rgba(160, 32, 240, 0.4);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   }
 }

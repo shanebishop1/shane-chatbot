@@ -13,6 +13,7 @@ import { getChatThreadByContext } from '../../api/chat';
 
 const InputContainer = () => {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const openModalRef = useRef<HTMLButtonElement | null>(null);
   const [showPrefs, setShowPrefs] = useState<boolean>(false);
   const [userCurrentText, setUserCurrentText] = useState<string>('');
   const [userCurrentContext, setUserCurrentContext] =
@@ -36,13 +37,12 @@ const InputContainer = () => {
       textAreaRef.current.blur();
     }
     // Add the user message to the chat
-    const timestamp = new Date().getTime();
     const userMessage = {
       id: Math.round(Math.random() * 10000),
       sender: 'user',
       text: userCurrentText,
       context: userCurrentContext,
-      timestamp,
+      timestamp: new Date().toISOString(),
     } as Message;
     pushMessage(userMessage);
 
@@ -97,7 +97,11 @@ const InputContainer = () => {
         <div
           className={`${styles.inputOptionsCol} ${styles.inputOptionsColRight}`}
         >
-          <button type="button" onClick={() => setShowPrefs(!showPrefs)}>
+          <button
+            ref={openModalRef}
+            type="button"
+            onClick={() => setShowPrefs(!showPrefs)}
+          >
             <HiOutlineCog className={styles.gearIcon} />
           </button>
           <button type="submit" onClick={onSubmit}>
@@ -109,6 +113,7 @@ const InputContainer = () => {
         <PrefsModal
           userCurrentContext={userCurrentContext}
           setShowPrefs={setShowPrefs}
+          openModalRef={openModalRef}
         />
       )}
     </div>

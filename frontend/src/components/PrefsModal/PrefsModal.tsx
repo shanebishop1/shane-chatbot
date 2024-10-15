@@ -8,11 +8,13 @@ import { deleteChatThreadByContext } from '../../api/chat';
 interface PrefsModalProps {
     setShowPrefs: React.Dispatch<React.SetStateAction<boolean>>;
     userCurrentContext: string;
+    openModalRef: React.RefObject<HTMLButtonElement>;
 }
 
 const PrefsModal: React.FC<PrefsModalProps> = ({
     setShowPrefs,
     userCurrentContext,
+    openModalRef,
 }) => {
     const messageContext = useContext(MessageContext) as MessageContextType;
 
@@ -23,7 +25,8 @@ const PrefsModal: React.FC<PrefsModalProps> = ({
         const handleClickOutside = (event: MouseEvent) => {
             if (
                 modalRef.current &&
-                !modalRef.current.contains(event.target as Node)
+                !modalRef.current.contains(event.target as Node) &&
+                !openModalRef.current?.contains(event.target as Node)
             ) {
                 setShowPrefs(false);
             }
