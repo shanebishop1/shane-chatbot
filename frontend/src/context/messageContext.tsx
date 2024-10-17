@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, ReactNode, useContext } from 'react';
 import { Message, MessageContextType } from '../types/types';
 
 export const MessageContext = createContext<MessageContextType | null>(null);
@@ -13,7 +13,6 @@ export const MessageProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const pushMessage = (newMessage: Message) => {
-    console.log(`Pushing message ${JSON.stringify(newMessage)}`);
     setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
 
@@ -26,4 +25,10 @@ export const MessageProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-export default MessageProvider;
+export const useMessages = (): MessageContextType => {
+  const context: MessageContextType | null = useContext(MessageContext);
+  if (!context) {
+    throw new Error('useMessages must be used within a MessageProvider');
+  }
+  return context;
+};

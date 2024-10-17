@@ -11,7 +11,7 @@ const LLMMessage: React.FC<LLMMessageProps> = ({ message }) => {
     <div className={styles.llmMessageContainer}>
       <ProfilePicture
         src={llmProfile}
-        imageType="AI"
+        imageType="LLM"
         className={styles.llmProfilePicture}
       />
       <div className={`${messageStyles.chatMessage} ${styles.llmMessage}`}>

@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useRef } from 'react';
-import { MessageContext } from '../../context/messageContext';
+import React, { useEffect, useRef } from 'react';
+import { useMessages } from '../../context/messageContext';
 import { MessageContextType } from '../../types/types';
 import LLMMessage from '../LLMMessage/LLMMessage';
 import UserMessage from '../UserMessage/UserMessage';
 import styles from './MessagesContainer.module.css';
 import { hasVerticalScrollbar } from '../../utils/utils';
 
-const MessagesContainer = () => {
-  const messageContext = useContext(MessageContext) as MessageContextType;
-  const { messages } = messageContext;
+const MessagesContainer: React.FC = () => {
+  const { messages } = useMessages() as MessageContextType;
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 

@@ -1,38 +1,41 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './InputContainer.module.css';
 import userProfile from '../../assets/userProfile.png';
 import { HiOutlineCog } from 'react-icons/hi';
 import { LuSendHorizonal } from 'react-icons/lu';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
-import { MessageContext } from '../../context/messageContext';
-import { Message, MessageContextType } from '../../types/types';
+import { useMessages } from '../../context/messageContext';
+import { AccessToken, Message, MessageContextType } from '../../types/types';
 import { postChat } from '../../api/chat';
 import { isIOSDevice } from '../../utils/utils';
 import PrefsModal from '../PrefsModal/PrefsModal';
 import { getChatThreadByContext } from '../../api/chat';
+import { useUserInfo } from '../../context/userInfoContext';
 
-const InputContainer = () => {
+const InputContainer: React.FC = () => {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
-  const openModalRef = useRef<HTMLButtonElement | null>(null);
+  const openModalButtonRef = useRef<HTMLButtonElement | null>(null);
   const [showPrefs, setShowPrefs] = useState<boolean>(false);
   const [userCurrentText, setUserCurrentText] = useState<string>('');
   const [userCurrentContext, setUserCurrentContext] =
     useState<string>('onboarding');
-  const messageContext = useContext(MessageContext) as MessageContextType;
-  const { messages } = messageContext;
-  const { pushMessage } = messageContext;
+
+  const { setMessages, pushMessage } = useMessages() as MessageContextType;
+  const { accessToken }: { accessToken: AccessToken } = useUserInfo();
 
   useEffect(() => {
     const updateChatThread = async () => {
-      const chatThread: Message[] =
-        await getChatThreadByContext(userCurrentContext);
-      messageContext.setMessages(chatThread);
+      const chatThread: Message[] = await getChatThreadByContext(
+        userCurrentContext,
+        accessToken,
+      );
+      setMessages(chatThread);
     };
     updateChatThread();
   }, [userCurrentContext]);
 
   const onSubmit = async () => {
-    // Make the iOS keyboard disappear
+    // On iOS, make the keyboard disappear
     if (textAreaRef.current && isIOSDevice()) {
       textAreaRef.current.blur();
     }
@@ -51,8 +54,13 @@ const InputContainer = () => {
 
     try {
       // Add the LLM response to the chat
-      const out = await postChat(userMessage);
-      pushMessage(out);
+      const llmResponseMessage: Message | null = await postChat(
+        userMessage,
+        accessToken,
+      );
+      if (llmResponseMessage) {
+        pushMessage(llmResponseMessage);
+      }
     } catch (error) {
       console.error('Error getting LLM response', error);
     }
@@ -98,7 +106,7 @@ const InputContainer = () => {
           className={`${styles.inputOptionsCol} ${styles.inputOptionsColRight}`}
         >
           <button
-            ref={openModalRef}
+            ref={openModalButtonRef}
             type="button"
             onClick={() => setShowPrefs(!showPrefs)}
           >
@@ -113,7 +121,7 @@ const InputContainer = () => {
         <PrefsModal
           userCurrentContext={userCurrentContext}
           setShowPrefs={setShowPrefs}
-          openModalRef={openModalRef}
+          openModalButtonRef={openModalButtonRef}
         />
       )}
     </div>
