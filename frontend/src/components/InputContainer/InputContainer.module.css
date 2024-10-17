@@ -62,12 +62,33 @@
   gap: 15px;
 }
 
+.contextSelect {
+  background: url('../../assets/downCaret.svg') no-repeat right 5px / 23px 23px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+  min-width: 112px;
+  min-height: 32px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 550;
+  color: black;
+  background-color: #fafbfc;
+  border-radius: 7px;
+  border-color: #e0e0e0;
+  padding: 4px;
+  outline: none;
+}
+
 .inputOptionsColRight {
   justify-content: flex-end;
   align-items: center;
 }
 
+/* Preferences and send buttons */
 .inputOptionsColRight > button {
+  -webkit-tap-highlight-color: transparent;
   background-color: inherit;
   color: inherit;
   margin-right: 1.8em;
@@ -76,6 +97,7 @@
   cursor: pointer;
 }
 
+/* Send button */
 .inputOptionsColRight button:nth-child(2) {
   margin-right: 0px;
 }
@@ -87,6 +109,12 @@
   height: 2.5em;
 }
 
+.sendIcon {
+  color: inherit;
+  width: 2.1em;
+  height: 2.1em;
+}
+
 .gearIcon:hover,
 .sendIcon:hover {
   color: var(--dark-purple);
@@ -95,21 +123,4 @@
 .gearIcon:active,
 .sendIcon:active {
   color: var(--purple);
-}
-
-.sendIcon {
-  color: inherit;
-  width: 2.1em;
-  height: 2.1em;
-}
-
-.contextSelect {
-  font-family: inherit;
-  font-size: 15px;
-  color: black;
-  background-color: #fafbfc;
-  border-radius: 8px;
-  border-color: #e0e0e0;
-  padding: 4px;
-  outline: none;
 }

@@ -14,6 +14,7 @@
   }
 }
 
+/* Irregular margin/padding is used to reposition the scrollbar away from the div it's scrolling */
 .messagesContainer:hover {
   @media (min-width: 550px) and (min-height: 680px) {
     overflow-y: auto;

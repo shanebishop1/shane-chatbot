@@ -2,10 +2,27 @@
   flex-basis: 10%;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .profileImgContainer > img {
   border-radius: 50%;
   object-fit: cover;
   width: 50px;
+}
+
+.initialProfileImg {
+  text-align: center;
+  cursor: default;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+  font-size: 24px;
+  line-height: 50px;
+  margin: 20px 0;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  color: white;
+  background: var(--purple);
 }

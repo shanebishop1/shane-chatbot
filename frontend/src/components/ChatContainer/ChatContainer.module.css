@@ -1,17 +1,17 @@
 .chatContainer {
-  background-color: #ffffff;
-  color: black;
   display: flex;
   flex-direction: column;
-  padding: 30px;
   box-sizing: border-box;
   overflow: hidden;
+  padding: 30px;
+  background-color: #ffffff;
+  color: black;
 
-  /* For narrower screens */
+  /* For narrower screens, take up full viewport */
   height: 100%;
   width: 100%;
 
-  /* For wider screens */
+  /* For wider screens, size responsively */
   @media (min-width: 550px) and (min-height: 680px) {
     height: 90%;
     width: 33%;

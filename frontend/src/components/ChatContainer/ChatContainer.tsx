@@ -4,7 +4,7 @@ import MessagesContainer from '../MessagesContainer/MessagesContainer';
 import InputContainer from '../InputContainer/InputContainer';
 import { MessageProvider } from '../../context/messageContext';
 
-const ChatContainer = () => {
+const ChatContainer: React.FC = () => {
   return (
     <MessageProvider>
       <div className={styles.chatContainer}>
