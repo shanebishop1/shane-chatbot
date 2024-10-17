@@ -9,3 +9,9 @@ class Message(BaseModel):
     text: str
     context: str
     timestamp: datetime
+
+
+class UserInfo(BaseModel):
+    access_token: str
+    email: str
+    exp: int
