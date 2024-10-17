@@ -11,6 +11,9 @@ openai = "*"
 psycopg2 = "*"
 alembic = "*"
 sqlalchemy = "*"
+google-auth = "*"
+pyjwt = "*"
+requests = "*"
 
 [dev-packages]
 black = "*"
