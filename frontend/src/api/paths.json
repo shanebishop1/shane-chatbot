@@ -1,4 +1,6 @@
 {
-  "CHAT_THREAD": "/chat/:context",
-  "CHAT": "/chat"
+  "CHAT_THREAD": "/api/chat/:context",
+  "CHAT": "/api/chat",
+  "LOGIN": "/api/auth/login",
+  "REFRESH": "/api/auth/refresh"
 }
