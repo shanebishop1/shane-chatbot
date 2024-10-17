@@ -17,12 +17,12 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  background-color: #e0e0e0;
+  background-color: white;
 }
 
 /* CSS Spinner credit: Andrea Rufo */
 .spinner {
-  background-color: #e0e0e0;
+  background-color: white;
   height: 60px;
   width: 60px;
   position: absolute;
