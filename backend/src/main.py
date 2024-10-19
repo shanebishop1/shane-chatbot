@@ -151,7 +151,7 @@ async def refresh_token(request: Request, response: Response) -> UserInfo:
         # Decode the refresh token
         payload: dict = decode_jwt(refresh_token)
         user_id: int | None = payload.get("sub")
-        user_email: int | None = payload.get("email")
+        user_email: str | None = payload.get("email")
         if not payload or not user_id or not user_email:
             raise jwt.InvalidTokenError("Invalid refresh token")
     except jwt.ExpiredSignatureError:

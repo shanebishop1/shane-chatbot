@@ -20,7 +20,7 @@ def create_access_token(user_id: int, email: str) -> str:
         {
             "sub": user_id,
             "email": email,
-            "exp": datetime.utcnow() + timedelta(ACCESS_TOKEN_EXPIRE_MINUTES),
+            "exp": datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES),
         },
         JWT_SECRET_KEY,
         algorithm=ALGORITHM,
@@ -48,10 +48,13 @@ def verify_jwt(credentials: HTTPAuthorizationCredentials = Depends(security)) ->
     try:
         payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[ALGORITHM])
         email = payload.get("email")
-        if email is None:
+        exp = payload.get("exp")
+        if email is None or exp is None:
             raise HTTPException(
                 status_code=403, detail="Invalid token. Email not found."
             )
+        elif int(exp) < int(datetime.now().timestamp()):
+            raise HTTPException(status_code=401, detail="Token has expired")
         return email
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token has expired")

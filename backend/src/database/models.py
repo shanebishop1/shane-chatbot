@@ -1,8 +1,9 @@
+from typing import Type
 from sqlalchemy import Column, Integer, String, Text, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.schema import Sequence
 
-Base = declarative_base()
+Base: Type = declarative_base()
 
 
 class DBMessage(Base):
