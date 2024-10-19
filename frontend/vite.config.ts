@@ -8,4 +8,9 @@ export default defineConfig({
     host: '127.0.0.1',
     port: 3000,
   },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/__tests__/setupVitest.tsx'],
+    globals: true,
+  },
 });

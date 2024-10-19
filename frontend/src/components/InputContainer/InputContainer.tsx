@@ -5,7 +5,11 @@ import { HiOutlineCog } from 'react-icons/hi';
 import { LuSendHorizonal } from 'react-icons/lu';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
 import { useMessages } from '../../context/messageContext';
-import { AccessToken, Message, MessageContextType } from '../../types/types';
+import {
+  Message,
+  MessageContextType,
+  UserInfoContextType,
+} from '../../types/types';
 import { postChat } from '../../api/chat';
 import { isIOSDevice } from '../../utils/utils';
 import PrefsModal from '../PrefsModal/PrefsModal';
@@ -21,7 +25,7 @@ const InputContainer: React.FC = () => {
     useState<string>('onboarding');
 
   const { setMessages, pushMessage } = useMessages() as MessageContextType;
-  const { accessToken }: { accessToken: AccessToken } = useUserInfo();
+  const { accessToken } = useUserInfo() as UserInfoContextType;
 
   useEffect(() => {
     const updateChatThread = async () => {
@@ -67,7 +71,7 @@ const InputContainer: React.FC = () => {
   };
 
   return (
-    <div className={styles.inputVerticalContainer}>
+    <div data-testid="inputContainer" className={styles.inputVerticalContainer}>
       <div className={styles.inputProfileTextContainer}>
         <ProfilePicture src={userProfile} imageType="User" />
         <div className={styles.inputTextBoxContainer}>

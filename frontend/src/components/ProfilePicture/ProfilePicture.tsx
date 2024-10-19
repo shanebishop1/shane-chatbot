@@ -16,7 +16,10 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({
 }) => {
   const userInfo: UserInfoContextType = useUserInfo();
   return (
-    <div className={`${styles.profileImgContainer} ${className ?? ''}`}>
+    <div
+      className={`${styles.profileImgContainer} ${className ?? ''}`}
+      data-testid="profileImgContainer"
+    >
       {imageType === 'User' ? (
         <div className={styles.initialProfileImg}>
           {userInfo.email.charAt(0).toUpperCase()}

@@ -16,7 +16,7 @@ const App: React.FC = () => {
   /// Show login page if we do not have a valid, unexpired access token
   if (!isAccessTokenValid) {
     return (
-      <div className="authContainer">
+      <div className="authContainer" data-testid="authContainer">
         <GoogleLogin
           onSuccess={(response) => {
             setGoogleIdToken(response.credential ?? '');

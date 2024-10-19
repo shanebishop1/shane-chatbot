@@ -13,11 +13,14 @@ const MessagesContainer: React.FC = () => {
 
   useEffect(() => {
     // Scroll to bottom of messages container when new messages are added
-    messagesEndRef.current?.scrollIntoView();
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView();
+    }
   }, [messages]);
 
   return (
     <div
+      data-testid="messagesContainer"
       className={`${styles.messagesContainer} ${!hasVerticalScrollbar(styles.messagesContainer) ? styles.scrollBarFix : ''}`}
     >
       {messages.map((message, index) =>

@@ -1,7 +1,10 @@
 __pycache__/
+localhost-cert.pem
+localhost-key.pem
+localhost.cnf
 .env
 .envrc
-
+.vite
 # Logs
 logs
 *.log
